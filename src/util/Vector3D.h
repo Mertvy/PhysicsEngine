@@ -20,11 +20,7 @@ public:
 
     Vector3D();
 
-    void scale(float scalar) {
-        this->x *= scalar;
-        this->y *= scalar;
-        this->z *= scalar;
-    }
+    void scale(float scalar);
 
     void add(Vector3D* vec);
 

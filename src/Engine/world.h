@@ -5,9 +5,18 @@
 #ifndef PHYSICSENGINE_WORLD_H
 #define PHYSICSENGINE_WORLD_H
 
+#include "../util/Vector3D.h"
+#include <vector>
+
 struct Object;
-class world {
+class World {
+private:
+    std::vector<Object*> objects;
+    float dt;
+    Vector3D* gravity;
 public:
+    World(float dt, Vector3D* gravity);
+
     void addObject(Object* obj);
 
     void removeObject(Object* obj);
