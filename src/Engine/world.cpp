@@ -12,16 +12,16 @@ struct Object {
     float mass;
 };
 
-class World:
+class World {
 private:
-    std::vector<Object*> objects;
+    std::vector<Object *> objects;
     float timeStep;
 public:
-    void addObject(Object* obj) {
+    void addObject(Object *obj) {
         objects.insert(obj);
     }
 
-    void removeObject(Object* obj) {
+    void removeObject(Object *obj) {
         for (int i = 0; i < objects.size(); i++) {
             if (obj == objects.at(i)) {
                 objects.erase(i);
@@ -29,7 +29,7 @@ public:
         }
     }
 
-    void updateObject(Object* obj, float dt) {
+    void updateObject(Object *obj, float dt) {
         obj->position[0] += obj->velocity[0] * dt;
         obj->position[1] += obj->velocity[1] * dt;
         obj->position[2] += obj->velocity[2] * dt;
@@ -40,8 +40,8 @@ public:
     }
 
     void update() {
-        for (Object* obj : objects) {
+        for (Object *obj: objects) {
             updateObject(obj, timeStep);
         }
     }
-
+};
