@@ -4,19 +4,25 @@
 
 #include <GL/glut.h>
 #include <math.h>
+#include "world.cpp"
+#include "../util/Vector3D.cpp"
+
 
 void display();
 void reshape(int, int);
 void timer(int);
 void drawCircle(float, float, float);
+
 const float PI = 3.141592653;
+const float dt = 1000/60;
+
 
 int main(int argc, char**argv){
     //initialize
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE);
-    glutInitWindowPosition(500,500);
-    glutInitWindowSize(500,500);
+    glutInitWindowPosition(0,0);
+    glutInitWindowSize(1920,1080);
 
     glutCreateWindow("New Window");
 
@@ -28,8 +34,8 @@ int main(int argc, char**argv){
     //loop
     glutMainLoop();
 }
-//test circle animation
-float x_pos = 0;
+
+float x_pos =0, y_pos= 0, r=50, m=5;
 
 void display(){
     //clear
@@ -37,7 +43,7 @@ void display(){
     glLoadIdentity();
 
     //draw
-    drawCircle(x_pos, 0, 10);
+    drawCircle(x_pos, y_pos, r);
 
     //display
     glutSwapBuffers();
@@ -47,25 +53,21 @@ void reshape(int width, int height){
     glViewport(0, 0, width, height); //window resize
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-    gluOrtho2D(-100, 100, -100, 100); //coordinate plane
+    gluOrtho2D(-960, 960, -540, 540); //coordinate plane
     glMatrixMode(GL_MODELVIEW);
 }
 
-void timer(int){
+void timer(int) {
     glutPostRedisplay();
-    glutTimerFunc(100/60, timer,0);
-    x_pos += 1;
-    if(x_pos > 100){
-        x_pos = -100;
-    }
+    glutTimerFunc(1000 / 60, timer, 0);
+    //here is where to update x and y coordinates
+
 }
 
 void drawCircle(float cx, float cy, float r){
-
     glBegin(GL_POLYGON);
-    for(int theta = 0; theta < 360; theta ++){
+    for(int theta = 0; theta < 360; theta++){
         glVertex2f(r*cos(theta)+cx, r*sin(theta)+cy);
     }
     glEnd();
-
 }
