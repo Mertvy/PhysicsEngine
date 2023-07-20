@@ -11,15 +11,29 @@ struct Object {
     Vector3D* velocity;
     Vector3D* force;
     float mass;
+
+    Object(Vector3D* position, Vector3D* velocity, Vector3D* force, float mass) {
+        this->position = position;
+        this->velocity = velocity;
+        this->force = force;
+        this->mass = mass;
+    }
+    ~Object() {
+        delete this->position;
+        delete this->velocity;
+        delete this->force;
+    }
 };
 
 class World {
 private:
     std::vector<Object*> objects;
     float dt;
+    Vector3D* gravity;
 public:
-    World(float dt) {
+    World(float dt, Vector3D* gravity) {
         this->dt = dt;
+        this-> gravity = gravity;
     }
 
     void addObject(Object *obj) {
