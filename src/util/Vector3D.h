@@ -16,7 +16,17 @@ public:
 
     Vector3D(float x, float y, float z);
 
+    Vector3D(Vector3D* vec);
+
     Vector3D();
+
+    void scale(float scalar) {
+        this->x *= scalar;
+        this->y *= scalar;
+        this->z *= scalar;
+    }
+
+    void add(Vector3D* vec);
 
     float dot(Vector3D* v);
 

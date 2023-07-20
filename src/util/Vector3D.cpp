@@ -21,17 +21,37 @@ public:
         this->magnitude = sqrt(x*x+y*y+z*z);
     }
 
-    Vector3D() = default;
-
-    float dot(Vector3D* v) {
-        return this->x * v->x + this->y * v->y + this->z * v->z;
+    Vector3D(Vector3D* vec) {
+        this->x = vec->x;
+        this->y = vec->y;
+        this->z = vec->z;
+        this->magnitude = vec->magnitude;
     }
 
-    Vector3D* cross(Vector3D* v) {
+    Vector3D() = default;
+
+    void scale(float scalar) {
+        this->x *= scalar;
+        this->y *= scalar;
+        this->z *= scalar;
+    }
+
+    void add(Vector3D* vec) {
+        this->x += vec->x;
+        this->y += vec->y;
+        this->z += vec->z;
+    }
+
+
+    float dot(Vector3D* vec) {
+        return this->x * vec->x + this->y * vec->y + this->z * vec->z;
+    }
+
+    Vector3D* cross(Vector3D* vec) {
         Vector3D* cross = new Vector3D;
-        cross->x = this->y * v->z - this->z * v->y;
-        cross->y = this->x * v->z - this->z * v->x;
-        cross->z = this->x * v->y - this->y * v->x;
+        cross->x = this->y * vec->z - this->z * vec->y;
+        cross->y = this->x * vec->z - this->z * vec->x;
+        cross->z = this->x * vec->y - this->y * vec->x;
         return cross;
     }
 };

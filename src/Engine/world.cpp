@@ -3,12 +3,13 @@
 //
 
 #include "world.h"
+#include "../util/Vector3D.h"
 #include <vector>
 
 struct Object {
-    float position[3];
-    float velocity[3];
-    float force[3];
+    Vector3D* position;
+    Vector3D* velocity;
+    Vector3D* force;
     float mass;
 };
 
@@ -34,13 +35,18 @@ public:
     }
 
     void updateObject(Object *obj, float dt) {
-        obj->position[0] += obj->velocity[0] * dt;
-        obj->position[1] += obj->velocity[1] * dt;
-        obj->position[2] += obj->velocity[2] * dt;
 
-        obj->velocity[0] += obj->force[0] * dt / obj->mass;
-        obj->velocity[1] += obj->force[1] * dt / obj->mass;
-        obj->velocity[2] += obj->force[2] * dt / obj->mass;
+        Vector3D* dPos = new Vector3D(obj->velocity);
+        dPos->scale(dt);
+
+        Vector3D* dVel = new Vector3D(obj->force);
+        dVel->scale(dt/obj->mass);
+
+        obj->position->add(dPos);
+        obj->velocity->add(dVel);
+
+        delete dPos;
+        delete dVel;
     }
 
     void update() {
