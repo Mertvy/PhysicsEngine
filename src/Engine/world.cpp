@@ -3,7 +3,6 @@
 //
 
 #include "world.h"
-#include "../util/Vector3D.h"
 #include <vector>
 
 struct Object {
@@ -25,47 +24,40 @@ struct Object {
     }
 };
 
-class World {
-private:
-    std::vector<Object*> objects;
-    float dt;
-    Vector3D* gravity;
-public:
-    World(float dt, Vector3D* gravity) {
-        this->dt = dt;
-        this-> gravity = gravity;
-    }
+World::World(float dt, Vector3D* gravity) {
+    this->dt = dt;
+    this-> gravity = gravity;
+}
 
-    void addObject(Object *obj) {
-        objects.push_back(obj);
-    }
+void World::addObject(Object *obj) {
+    objects.push_back(obj);
+}
 
-    void removeObject(Object *obj) {
-        for (int i = 0; i < objects.size(); i++) {
-            if (obj == objects[i]) {
-                objects.erase(objects.begin() + i);
-            }
+void World::removeObject(Object *obj) {
+    for (int i = 0; i < objects.size(); i++) {
+        if (obj == objects[i]) {
+            objects.erase(objects.begin() + i);
         }
     }
+}
 
-    void updateObject(Object *obj, float dt) {
+void World::updateObject(Object *obj, float dt) {
 
-        Vector3D* dPos = new Vector3D(obj->velocity);
-        dPos->scale(dt);
+    Vector3D* dPos = new Vector3D(obj->velocity);
+    dPos->scale(dt);
 
-        Vector3D* dVel = new Vector3D(obj->force);
-        dVel->scale(dt/obj->mass);
+    Vector3D* dVel = new Vector3D(obj->force);
+    dVel->scale(dt/obj->mass);
 
-        obj->position->add(dPos);
-        obj->velocity->add(dVel);
+    obj->position->add(dPos);
+    obj->velocity->add(dVel);
 
-        delete dPos;
-        delete dVel;
+    delete dPos;
+    delete dVel;
+}
+
+void World::update() {
+    for (Object *obj: objects) {
+        updateObject(obj, dt);
     }
-
-    void update() {
-        for (Object *obj: objects) {
-            updateObject(obj, dt);
-        }
-    }
-};
+}
