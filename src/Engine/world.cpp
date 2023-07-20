@@ -15,10 +15,10 @@ struct Object {
 class World {
 private:
     std::vector<Object*> objects;
-    float timeStep;
+    float dt;
 public:
-    World(float timeStep) {
-        this->timeStep = timeStep;
+    World(float dt) {
+        this->dt = dt;
     }
 
     void addObject(Object *obj) {
@@ -45,7 +45,7 @@ public:
 
     void update() {
         for (Object *obj: objects) {
-            updateObject(obj, timeStep);
+            updateObject(obj, dt);
         }
     }
 };
