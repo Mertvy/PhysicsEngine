@@ -14,17 +14,21 @@ struct Object {
 
 class World {
 private:
-    std::vector<Object *> objects;
+    std::vector<Object*> objects;
     float timeStep;
 public:
+    World(float timeStep) {
+        this->timeStep = timeStep;
+    }
+
     void addObject(Object *obj) {
-        objects.insert(obj);
+        objects.push_back(obj);
     }
 
     void removeObject(Object *obj) {
         for (int i = 0; i < objects.size(); i++) {
-            if (obj == objects.at(i)) {
-                objects.erase(i);
+            if (obj == objects[i]) {
+                objects.erase(objects.begin() + i);
             }
         }
     }
