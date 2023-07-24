@@ -4,8 +4,8 @@
 
 #include <GL/glut.h>
 #include <math.h>
-#include "world.cpp"
-#include "../util/Vector3D.cpp"
+#include "../util/Vector3D.h"
+#include "render.h"
 
 
 void display();
@@ -24,11 +24,12 @@ int main(int argc, char**argv){
     glutInitWindowPosition(0,0);
     glutInitWindowSize(1920,1080);
 
-    glutCreateWindow("New Window");
+    glutCreateWindow("Physics Engine");
 
     //callback
     glutDisplayFunc(display);
     glutReshapeFunc(reshape);
+    glutMouseFunc(mouse);
     glutTimerFunc(0, timer, 0);
 
     //loop
@@ -37,6 +38,7 @@ int main(int argc, char**argv){
 
 float x_pos =0, y_pos= 0, r=50, m=5;
 
+
 void display(){
     //clear
     glClear(GL_COLOR_BUFFER_BIT);
@@ -44,7 +46,6 @@ void display(){
 
     //draw
     drawCircle(x_pos, y_pos, r);
-
     //display
     glutSwapBuffers();
 };
@@ -60,14 +61,7 @@ void reshape(int width, int height){
 void timer(int) {
     glutPostRedisplay();
     glutTimerFunc(1000 / 60, timer, 0);
-    //here is where to update x and y coordinates
 
-}
+    //here is where to update x and y
 
-void drawCircle(float cx, float cy, float r){
-    glBegin(GL_POLYGON);
-    for(int theta = 0; theta < 360; theta++){
-        glVertex2f(r*cos(theta)+cx, r*sin(theta)+cy);
-    }
-    glEnd();
 }

@@ -5,24 +5,17 @@
 #include "world.h"
 #include <vector>
 
-struct Object {
-    Vector3D* position;
-    Vector3D* velocity;
-    Vector3D* force;
-    float mass;
-
-    Object(Vector3D* position, Vector3D* velocity, Vector3D* force, float mass) {
+Object::Object(Vector3D* position, Vector3D* velocity, Vector3D* force, float mass) {
         this->position = position;
         this->velocity = velocity;
         this->force = force;
         this->mass = mass;
-    }
-    ~Object() {
+}
+Object::~Object(){
         delete this->position;
         delete this->velocity;
         delete this->force;
-    }
-};
+}
 
 World::World(float dt, Vector3D* gravity) {
     this->dt = dt;

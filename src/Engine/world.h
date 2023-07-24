@@ -8,7 +8,14 @@
 #include "../util/Vector3D.h"
 #include <vector>
 
-struct Object;
+struct Object{
+    Vector3D* position;
+    Vector3D* velocity;
+    Vector3D* force;
+    float mass;
+    Object(Vector3D*, Vector3D*, Vector3D*, float);
+    ~Object();
+};
 class World {
 private:
     std::vector<Object*> objects;
