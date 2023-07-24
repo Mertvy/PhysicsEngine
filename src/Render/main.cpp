@@ -41,6 +41,7 @@ float x_pos =0, y_pos= 0, r=50, m=5;
 
 void display(){
     //clear
+
     glClear(GL_COLOR_BUFFER_BIT);
     glLoadIdentity();
 
@@ -61,7 +62,23 @@ void reshape(int width, int height){
 void timer(int) {
     glutPostRedisplay();
     glutTimerFunc(1000 / 60, timer, 0);
-
     //here is where to update x and y
+    r+=1;
 
+}
+
+//should draw circle when mouse clicked
+//this doesnt fucking work get this shit checked
+void mouse(int button, int state, int x, int y){
+    bool check;
+    if(button == GLUT_LEFT_BUTTON && state == GLUT_DOWN){
+        check = true;
+    }
+    if(button == GLUT_RIGHT_BUTTON && state == GLUT_DOWN){
+        check = false;
+    }
+    if(check == true){
+        drawCircle(x, y, 50);
+    }
+    glutPostRedisplay();
 }

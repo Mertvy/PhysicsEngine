@@ -14,20 +14,6 @@ void createObject(float x, float y, float z, float mass, World world){
     world.addObject(obj);
 }
 
-//should draw circle when mouse clicked
-void mouse(int button, int state, int x, int y){
-    bool check;
-    if(button == GLUT_LEFT_BUTTON){
-        check = true;
-    }
-    if(button == GLUT_RIGHT_BUTTON){
-        check = false;
-    }
-    if(check == true){
-        drawCircle(x, y, 50);
-    }
-}
-
 void drawCircle(float cx, float cy, float r) {
     glBegin(GL_POLYGON);
     for (int theta = 0; theta < 360; theta++) {
