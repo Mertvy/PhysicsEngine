@@ -4,6 +4,7 @@
 
 #include <GL/glut.h>
 #include <math.h>
+#include <cstdio>
 #include "../util/Vector3D.h"
 #include "render.h"
 
@@ -12,6 +13,7 @@ void display();
 void reshape(int, int);
 void timer(int);
 void drawCircle(float, float, float);
+void mouse(int, int , int , int);
 
 const float PI = 3.141592653;
 const float dt = 1000/60;
@@ -37,16 +39,17 @@ int main(int argc, char**argv){
 }
 
 float x_pos =0, y_pos= 0, r=50, m=5;
-
+int circles = 0;
 
 void display(){
     //clear
-
     glClear(GL_COLOR_BUFFER_BIT);
     glLoadIdentity();
-
     //draw
-    drawCircle(x_pos, y_pos, r);
+    for(int i = 0; i <= circles; i++){
+        drawCircle(x_pos, y_pos, r);
+        i++;
+    }
     //display
     glutSwapBuffers();
 };
@@ -63,22 +66,18 @@ void timer(int) {
     glutPostRedisplay();
     glutTimerFunc(1000 / 60, timer, 0);
     //here is where to update x and y
-    r+=1;
-
+    r++;
 }
 
 //should draw circle when mouse clicked
 //this doesnt fucking work get this shit checked
 void mouse(int button, int state, int x, int y){
-    bool check;
-    if(button == GLUT_LEFT_BUTTON && state == GLUT_DOWN){
-        check = true;
+    printf("%d, %d, %d, %d\n", button, state, x, y);
+    if(button == 0 && state == 0){
+        x_pos = x-960;
+        y_pos = -y+540;
+        r = 50;
+        circles++;
     }
-    if(button == GLUT_RIGHT_BUTTON && state == GLUT_DOWN){
-        check = false;
-    }
-    if(check == true){
-        drawCircle(x, y, 50);
-    }
-    glutPostRedisplay();
+
 }
