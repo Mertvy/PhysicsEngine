@@ -6,12 +6,12 @@
 #include <math.h>
 
 //add object to world and such
-void createObject(float x, float y, float z, float mass, World world){
+void createObject(float x, float y, float z, float mass, World* world){
     Vector3D* pos = new Vector3D(x, y,z);
     Vector3D* vel = new Vector3D(0, 0,0);
     Vector3D* force = new Vector3D(0, 0,0);
     Object* obj = new Object(pos, vel, force, mass);
-    world.addObject(obj);
+    world->addObject(obj);
 }
 
 void drawCircle(float cx, float cy, float r) {

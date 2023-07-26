@@ -1,8 +1,9 @@
 //
 // Created by Nicholas Weiss on 7/18/2023.
 //
-
+#include <iostream>
 #include "world.h"
+#include "../Render/render.h"
 #include <vector>
 
 Object::Object(Vector3D* position, Vector3D* velocity, Vector3D* force, float mass) {
@@ -45,6 +46,8 @@ void World::updateObject(Object *obj, float dt) {
     obj->position->add(dPos);
     obj->velocity->add(dVel);
 
+    printf("%d, %d", obj->position->x, obj->position->y);
+
     delete dPos;
     delete dVel;
 }
@@ -53,4 +56,11 @@ void World::update() {
     for (Object *obj: objects) {
         updateObject(obj, dt);
     }
+}
+
+void World::draw(){
+    for(Object *obj: objects){
+        drawCircle(obj->position->x, obj->position->y, 50);
+    }
+
 }

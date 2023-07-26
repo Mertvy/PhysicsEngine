@@ -31,6 +31,8 @@ public:
     void updateObject(Object* obj, float dt);
 
     void update();
+
+    void draw();
 };
 
 
