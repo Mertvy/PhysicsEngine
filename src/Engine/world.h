@@ -20,7 +20,6 @@ class World {
 private:
     std::vector<Object*> objects;
     float dt;
-    Vector3D* gravity;
 public:
     World(float dt, Vector3D* gravity);
 
@@ -33,6 +32,8 @@ public:
     void update();
 
     void draw();
+
+    Vector3D* gravity;
 };
 
 

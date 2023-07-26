@@ -8,7 +8,6 @@
 #include "world.h"
 
 void createObject(float, float, float, float, World*);
-void mouse(int, int, int, int);
 void drawCircle(float, float, float);
 
 #endif //PHYSICSENGINE_RENDER_H

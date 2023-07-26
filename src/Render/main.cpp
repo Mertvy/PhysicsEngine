@@ -17,8 +17,8 @@ void mouse(int, int , int , int);
 
 const float PI = 3.141592653;
 const float dt = 1000/60;
-Vector3D* grav = new Vector3D(0, -0.05, 0);
-World* world = new World(1/60, grav);
+Vector3D* grav = new Vector3D(0, -0.5, 0);
+World* world = new World(1, grav);
 
 int main(int argc, char**argv){
     //initialize
@@ -62,15 +62,10 @@ void timer(int) {
     glutTimerFunc(1000 / 60, timer, 0);
     //here is where to update x and y
     world->update();
-
 }
 
-//should draw circle when mouse clicked
-//this doesnt fucking work get this shit checked
 void mouse(int button, int state, int x, int y) {
-
     if (button == 0 && state == 0) {
-        createObject(x - 960, -y + 540,0 , 5, world);
-
+        createObject((float)x - 960,(float)-y + 540, (float)(0),(float)(5),world);
     }
 }

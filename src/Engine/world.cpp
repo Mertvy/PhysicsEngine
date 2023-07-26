@@ -20,7 +20,7 @@ Object::~Object(){
 
 World::World(float dt, Vector3D* gravity) {
     this->dt = dt;
-    this-> gravity = gravity;
+    this->gravity = gravity;
 }
 
 void World::addObject(Object *obj) {
@@ -39,15 +39,10 @@ void World::updateObject(Object *obj, float dt) {
 
     Vector3D* dPos = new Vector3D(obj->velocity);
     dPos->scale(dt);
-
     Vector3D* dVel = new Vector3D(obj->force);
-    dVel->scale(dt/obj->mass);
-
+    dVel->scale((dt)/(obj->mass));
     obj->position->add(dPos);
     obj->velocity->add(dVel);
-
-    printf("%d, %d", obj->position->x, obj->position->y);
-
     delete dPos;
     delete dVel;
 }
@@ -62,5 +57,4 @@ void World::draw(){
     for(Object *obj: objects){
         drawCircle(obj->position->x, obj->position->y, 50);
     }
-
 }
