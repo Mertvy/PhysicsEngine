@@ -16,6 +16,18 @@ struct Object{
     Object(Vector3D*, Vector3D*, Vector3D*, float);
     ~Object();
 };
+
+struct Circle : public Object {
+    float radius;
+    Circle(Vector3D* position, Vector3D* velocity, Vector3D* force, float mass, float radius);
+}
+
+struct LineSegment : public Object {
+    Vector3D* start;
+    Vector3D* end;
+    LineSegment(Vector3D* start, Vector3D* end, Vector3D* velocity, Vector3D* force, float mass);
+};
+
 class World {
 private:
     std::vector<Object*> objects;

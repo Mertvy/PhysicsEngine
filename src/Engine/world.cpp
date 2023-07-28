@@ -18,6 +18,18 @@ Object::~Object(){
         delete this->force;
 }
 
+
+Circle::Circle(Vector3D* position, Vector3D* velocity, Vector3D* force, float mass, float radius)
+        : Object(position, velocity, force, mass){
+    this->radius = radius;
+}
+
+LineSegment::LineSegment(Vector3D* start, Vector3D* end, Vector3D* velocity, Vector3D* force, float mass)
+             : Object(new Vector3D(end->x+start->x/2.0, end->y+start->y/2.0, end->z+start->z/2.0), velocity, force, mass) {
+
+}
+
+
 World::World(float dt, Vector3D* gravity) {
     this->dt = dt;
     this->gravity = gravity;
