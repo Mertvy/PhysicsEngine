@@ -16,7 +16,7 @@ void drawCircle(float, float, float);
 void mouse(int, int , int , int);
 
 Vector3D* grav = new Vector3D(0, -0.5, 0);
-World* world = new World(1.2, grav);
+World* world = new World(1, grav);
 
 int main(int argc, char**argv){
     //initialize
@@ -43,6 +43,16 @@ void display(){
     glLoadIdentity();
     //draw
     world->draw();
+    glBegin(GL_LINES);
+    glVertex2f(500, 500);
+    glVertex2f(500, -500);
+    glVertex2f(500, -500);
+    glVertex2f(-500, -500);
+    glVertex2f(-500, -500);
+    glVertex2f(-500, 500);
+    glVertex2f(-500, 500);
+    glVertex2f(500, 500);
+    glEnd();
     //display
     glutSwapBuffers();
 };
