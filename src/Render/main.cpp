@@ -15,10 +15,8 @@ void timer(int);
 void drawCircle(float, float, float);
 void mouse(int, int , int , int);
 
-const float PI = 3.141592653;
-const float dt = 1000/60;
 Vector3D* grav = new Vector3D(0, -0.5, 0);
-World* world = new World(1, grav);
+World* world = new World(1.2, grav);
 
 int main(int argc, char**argv){
     //initialize
@@ -65,7 +63,7 @@ void timer(int) {
 }
 
 void mouse(int button, int state, int x, int y) {
-    if (button == 0 && state == 0) {
-        createObject((float)x - 960,(float)-y + 540, (float)(0),(float)(5),world);
+    if(button == 0 && state == 0) {
+        createObject((float)x - 960,(float)-y + 540, 0,5,world);
     }
 }
