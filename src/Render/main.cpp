@@ -70,6 +70,7 @@ void timer(int) {
     glutTimerFunc(1000 / 60, timer, 0);
     //here is where to update x and y
     world->update();
+
 }
 
 void mouse(int button, int state, int x, int y) {

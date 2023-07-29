@@ -45,6 +45,7 @@ void World::updateObject(Object *obj, float dt) {
     obj->velocity->add(dVel);
     delete dPos;
     delete dVel;
+
 }
 
 void World::update() {
