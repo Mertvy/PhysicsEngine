@@ -7,7 +7,7 @@
 #include <cstdio>
 #include "../util/Vector3D.h"
 #include "render.h"
-
+#include "collision.h"
 
 void display();
 void reshape(int, int);
@@ -70,11 +70,15 @@ void timer(int) {
     glutTimerFunc(1000 / 60, timer, 0);
     //here is where to update x and y
     world->update();
+    for(int i = 0; i < world->objects.size() ; i++){
+        //objectCollision(world->objects[i], world->objects[i+1]);
+        i++;
+    }
 
 }
 
 void mouse(int button, int state, int x, int y) {
     if(button == 0 && state == 0) {
-        createObject((float)x - 960,(float)-y + 540, 0,5,world);
+        createCircle((float)x - 960,(float)-y + 540, 0,5, 50, world);
     }
 }

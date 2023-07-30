@@ -13,7 +13,7 @@ void objectCollision(Circle* cir1, Circle* cir2) {
     double distance = sqrt(pow((cir1->position->x - cir2->position->x), 2) +
                            pow((cir1->position->y - cir2->position->y), 2) +
                            pow((cir1->position->z - cir2->position->z), 2));
-    if (distance >= obj1->radius + obj2->radius) return;
+    if (distance >= cir1->radius + cir2->radius) return;
     Vector3D* direction = new Vector3D(cir1->position->x - cir2->position->x,
                                        cir1->position->y - cir2->position->y,
                                        cir1->position->z - cir2->position->z);

@@ -4,7 +4,8 @@
 
 #ifndef PHYSICSENGINE3_COLLISION_H
 #define PHYSICSENGINE3_COLLISION_H
+#include <world.h>
 
-void objectCollision(Object* obj1, Object* obj2);
+void objectCollision(Circle* obj1, Circle* obj2);
 
 #endif //PHYSICSENGINE3_COLLISION_H

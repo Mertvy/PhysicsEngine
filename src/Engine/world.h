@@ -20,7 +20,7 @@ struct Object{
 struct Circle : public Object {
     float radius;
     Circle(Vector3D* position, Vector3D* velocity, Vector3D* force, float mass, float radius);
-}
+};
 
 struct LineSegment : public Object {
     Vector3D* start;
@@ -30,7 +30,6 @@ struct LineSegment : public Object {
 
 class World {
 private:
-    std::vector<Object*> objects;
     float dt;
 public:
     World(float dt, Vector3D* gravity);
@@ -46,6 +45,7 @@ public:
     void draw();
 
     Vector3D* gravity;
+    std::vector<Object*> objects;
 };
 
 
