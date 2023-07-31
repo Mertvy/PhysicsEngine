@@ -6,6 +6,10 @@
 #define PHYSICSENGINE3_COLLISION_H
 #include <world.h>
 
-void objectCollision(Circle* obj1, Circle* obj2);
+void circleCircleCollision(Circle* cir1, Circle* cir2);
+
+void circleLineCollision(Circle* cir, LineSegment* line);
+
+void lineLineCollision(LineSegment* line1, LineSegment* line2);
 
 #endif //PHYSICSENGINE3_COLLISION_H

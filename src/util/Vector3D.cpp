@@ -31,12 +31,14 @@ void Vector3D::add(Vector3D* vec) {
     this->x += vec->x;
     this->y += vec->y;
     this->z += vec->z;
+    this->magnitude = sqrt(this->x*this->x + this->y*this->y + this->z*this->z);
 }
 
 void Vector3D::subtract(Vector3D *vec) {
     this->x -= vec->x;
     this->y -= vec->y;
     this->z -= vec->z;
+    this->magnitude = sqrt(this->x*this->x + this->y*this->y + this->z*this->z);
 }
 
 
@@ -45,9 +47,9 @@ float Vector3D::dot(Vector3D* vec) {
 }
 
 Vector3D* Vector3D::cross(Vector3D* vec) {
-    Vector3D* cross = new Vector3D;
-    cross->x = this->y * vec->z - this->z * vec->y;
-    cross->y = this->x * vec->z - this->z * vec->x;
-    cross->z = this->x * vec->y - this->y * vec->x;
+    float crossX = this->y * vec->z - this->z * vec->y;
+    float crossY = this->x * vec->z - this->z * vec->x;
+    float crossZ = this->x * vec->y - this->y * vec->x;
+    Vector3D* cross = new Vector3D(crossX, crossY, crossZ);
     return cross;
 }
