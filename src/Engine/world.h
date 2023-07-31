@@ -8,24 +8,27 @@
 #include "../util/Vector3D.h"
 #include <vector>
 
-struct Object{
-    Vector3D* position;
-    Vector3D* velocity;
-    Vector3D* force;
-    float mass;
-    Object(Vector3D*, Vector3D*, Vector3D*, float);
-    ~Object();
+class Object{
+    public Vector3D* position;
+    public Vector3D* velocity;
+    public Vector3D* force;
+    public float mass;
+    public Object(Vector3D*, Vector3D*, Vector3D*, float);
+    public ~Object();
+    public virtual void collide(Object* obj) = 0;
 };
 
-struct Circle : public Object {
+class Circle : public Object {
     float radius;
     Circle(Vector3D* position, Vector3D* velocity, Vector3D* force, float mass, float radius);
+    void collide(Object* obj);
 };
 
-struct LineSegment : public Object {
+class LineSegment : public Object {
     Vector3D* start;
     Vector3D* end;
     LineSegment(Vector3D* start, Vector3D* end, Vector3D* velocity, Vector3D* force, float mass);
+    void collide(Object* obj)
 };
 
 class World {

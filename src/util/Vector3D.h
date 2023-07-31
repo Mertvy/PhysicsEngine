@@ -24,9 +24,11 @@ public:
 
     void add(Vector3D* vec);
 
-    float dot(Vector3D* v);
+    void subtract(Vector3D* vec);
 
-    Vector3D* cross(Vector3D* v);
+    float dot(Vector3D* vec);
+
+    Vector3D* cross(Vector3D* vec);
 };
 
 #endif //PHYSICSENGINE_VECTOR3D_H

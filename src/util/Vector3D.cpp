@@ -33,6 +33,12 @@ void Vector3D::add(Vector3D* vec) {
     this->z += vec->z;
 }
 
+void Vector3D::subtract(Vector3D *vec) {
+    this->x -= vec->x;
+    this->y -= vec->y;
+    this->z -= vec->z;
+}
+
 
 float Vector3D::dot(Vector3D* vec) {
     return this->x * vec->x + this->y * vec->y + this->z * vec->z;
