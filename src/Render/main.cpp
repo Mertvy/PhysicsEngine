@@ -43,16 +43,6 @@ void display(){
     glLoadIdentity();
     //draw
     world->draw();
-    glBegin(GL_LINES);
-    glVertex2f(500, 500);
-    glVertex2f(500, -500);
-    glVertex2f(500, -500);
-    glVertex2f(-500, -500);
-    glVertex2f(-500, -500);
-    glVertex2f(-500, 500);
-    glVertex2f(-500, 500);
-    glVertex2f(500, 500);
-    glEnd();
     //display
     glutSwapBuffers();
 };
@@ -71,8 +61,14 @@ void timer(int) {
     //here is where to update x and y
     world->update();
     for(int i = 0; i < world->objects.size() ; i++){
-        //objectCollision(world->objects[i], world->objects[i+1]);
-        i++;
+        for(int j = i+1; j < world->objects.size(); j++){
+            if(auto cir = dynamic_cast<Circle*>(world->objects[i])){
+                cir->collide(world->objects[j]);
+            }
+            else if(auto line = dynamic_cast<LineSegment*>(world->objects[i])){
+                line->collide(world->objects[j]);
+            }
+        }
     }
 
 }
@@ -80,5 +76,11 @@ void timer(int) {
 void mouse(int button, int state, int x, int y) {
     if(button == 0 && state == 0) {
         createCircle((float)x - 960,(float)-y + 540, 0,5, 50, world);
+    }
+    else if(button == 2 && state == 0){
+        createLine(500, 500, 0, 500, -500, 0, 5, world);
+        createLine(500, -500, 0, -500, -500, 0, 5, world);
+        createLine(-500, -500, 0, -500, 500, 0, 5, world);
+        createLine(-500, 500, 0, 500, 500, 0, 5, world);
     }
 }

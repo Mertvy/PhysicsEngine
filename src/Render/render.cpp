@@ -6,16 +6,6 @@
 #include <math.h>
 #include <iostream>
 //add object to world and such
-void createObject(float x, float y, float z, float mass, World* world){
-    Vector3D* pos = new Vector3D(x, y, z);
-    Vector3D* vel = new Vector3D(0, 0,0);
-    Vector3D* force = new Vector3D(0, 0,0);
-    force->x = world->gravity->x * mass;
-    force->y = world->gravity->y * mass;
-    force->z = world->gravity->z * mass;
-    Object* obj = new Object(pos, vel, force, mass);
-    world->addObject(obj);
-}
 
 void createCircle(float x, float y, float z, float mass, float r, World* world){
     Vector3D* pos = new Vector3D(x, y, z);
@@ -28,6 +18,15 @@ void createCircle(float x, float y, float z, float mass, float r, World* world){
     world->addObject(cir);
 }
 
+void createLine(float sx, float sy, float sz, float ex, float ey, float ez, float mass, World* world){
+    Vector3D* start = new Vector3D(sx, sy, sz);
+    Vector3D* end = new Vector3D(ex, ey, ez);
+    Vector3D* vel = new Vector3D(0, 0,0);
+    Vector3D* force = new Vector3D(0, 0,0);
+    LineSegment* line = new LineSegment(start, end, vel, force, mass);
+    world->addObject(line);
+}
+
 
 void drawCircle(float cx, float cy, float r) {
     glBegin(GL_POLYGON);
@@ -37,4 +36,11 @@ void drawCircle(float cx, float cy, float r) {
     glEnd();
 }
 
-
+void drawLine(float sx, float sy, float sz, float ex, float ey, float ez){
+    sz = 0;
+    ez = 0;
+    glBegin(GL_LINES);
+    glVertex2f(sx, sy);
+    glVertex2f(ex, ey);
+    glEnd();
+}
