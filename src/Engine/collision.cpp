@@ -55,7 +55,14 @@ void circleLineCollision(Circle* cir, LineSegment* line) {
 }
 
 void lineLineCollision(LineSegment* line1, LineSegment* line2) {
+    float u = line1->end->x - line1->start->x;
+    float v = line1->end->y - line1->start->y;
+    float w = line1->end->z - line1->start->z;
+    Vector3D* vec1 = new Vector3D(u, v, w);
+    u = line2->end->x - line2->start->x;
+    v = line2->end->y - line2->start->y;
+    w = line2->end->z - line2->start->z;
+    Vector3D* vec2 = new Vector3D(u, v, w);
 
 }
-
 }
