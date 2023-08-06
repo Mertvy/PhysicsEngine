@@ -9,26 +9,34 @@
 #include <vector>
 
 class Object{
-    public Vector3D* position;
-    public Vector3D* velocity;
-    public Vector3D* force;
-    public float mass;
-    public Object(Vector3D*, Vector3D*, Vector3D*, float);
-    public ~Object();
-    public virtual void collide(Object* obj) = 0;
+public: Vector3D* position;
+public: Vector3D* velocity;
+public: Vector3D* force;
+public: float mass;
+public: Object(Vector3D*, Vector3D*, Vector3D*, float);
+public: ~Object();
+public: virtual void collide(Object* obj) = 0;
 };
 
 class Circle : public Object {
+
+public:
     float radius;
+
     Circle(Vector3D* position, Vector3D* velocity, Vector3D* force, float mass, float radius);
+
     void collide(Object* obj);
 };
 
 class LineSegment : public Object {
-    Vector3D* start;
+
+public:
     Vector3D* end;
+    Vector3D* start;
+
     LineSegment(Vector3D* start, Vector3D* end, Vector3D* velocity, Vector3D* force, float mass);
-    void collide(Object* obj)
+
+    void collide(Object* obj);
 };
 
 class World {

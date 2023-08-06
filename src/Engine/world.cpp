@@ -91,6 +91,11 @@ void World::update() {
 
 void World::draw(){
     for(Object *obj: objects){
-        drawCircle(obj->position->x, obj->position->y, 50);
+        if(auto cir = dynamic_cast<Circle*>(obj)){
+            drawCircle(cir->position->x, cir->position->y, cir->radius);
+        }
+        else if(auto line = dynamic_cast<LineSegment*>(obj)){
+            drawLine(line->start->x, line->start->y, 0, line->end->x, line->end->y, 0);
+        }
     }
 }
