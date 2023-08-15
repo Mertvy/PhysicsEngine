@@ -78,6 +78,9 @@ void World::updateObject(Object *obj, float dt) {
     dVel->scale((dt)/(obj->mass));
     obj->position->add(dPos);
     obj->velocity->add(dVel);
+    obj->force->x = gravity->x;
+    obj->force->y = gravity->y;
+    obj->force->z = gravity->z;
     delete dPos;
     delete dVel;
 

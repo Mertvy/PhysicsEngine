@@ -11,8 +11,8 @@
 // check whether distance between objects is greater than sum of their radii, else apply a repulsive force
 void circleCircleCollision(Circle* cir1, Circle* cir2) {
     double distance = sqrt(pow((cir1->position->x - cir2->position->x), 2) +
-                           pow((cir1->position->y - cir2->position->y), 2))+
-                           pow((cir1->position->z - cir2->position->z), 2))*
+                           pow((cir1->position->y - cir2->position->y), 2) +
+                           pow((cir1->position->z - cir2->position->z), 2));
     if (distance >= cir1->radius + cir2->radius) return;
     Vector3D* direction = new Vector3D(cir1->position->x - cir2->position->x,
                                        cir1->position->y - cir2->position->y,
@@ -22,6 +22,7 @@ void circleCircleCollision(Circle* cir1, Circle* cir2) {
     cir2->force->subtract(direction);
     delete direction;
 }
+
 /*
 void circleLineCollision(Circle* cir, LineSegment* line) {
     float u = line->end->x - line->start->x;
@@ -58,9 +59,16 @@ void circleLineCollision(Circle* cir, LineSegment* line) {
     if((line->end->x - line->start->x) != 0) {
         float m = (line->end->y - line->start->y) / (line->end->x - line->start->x);
         float c = -(line->start->y - (m * line->start->x));
-        float b = 1;
         float a = -m;
-        float d = fabs(a * cir->position->x + b * cir->position->y + c) / (sqrt(pow(a, 2) + pow(b, 2)));
+        float d = fabs(a * cir->position->x + cir->position->y + c) / (sqrt(pow(a, 2) + 1));
+
+        float b1 = (line->start->y - m* line->start->x);
+        float b2 = (cir->position->y - (-1/m) * cir->position->x);
+        float x = (b2-b1)/(m+(1/m));
+        float y = m*x + b1;
+        if(x > line->end->x || x < line->start->x) return;
+        if(y > line->end->y || y < line->start->y) return;
+
         if (d < cir->radius) {
             cir->velocity->y = -cir->velocity->y;
         }
@@ -73,7 +81,7 @@ void circleLineCollision(Circle* cir, LineSegment* line) {
     }
 
 
-}*/
+}
 
 void lineLineCollision(LineSegment* line1, LineSegment* line2) {
     float u = line1->end->x - line1->start->x;
@@ -85,5 +93,4 @@ void lineLineCollision(LineSegment* line1, LineSegment* line2) {
     w = line2->end->z - line2->start->z;
     Vector3D* vec2 = new Vector3D(u, v, w);
 
-}
 }

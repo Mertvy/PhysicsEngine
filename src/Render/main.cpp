@@ -5,6 +5,7 @@
 #include <GL/glut.h>
 #include <math.h>
 #include <cstdio>
+#include <iostream>
 #include "../util/Vector3D.h"
 #include "render.h"
 #include "collision.h"
@@ -15,8 +16,8 @@ void timer(int);
 void drawCircle(float, float, float);
 void mouse(int, int , int , int);
 
-Vector3D* grav = new Vector3D(0, -0.5, 0);
-World* world = new World(1, grav);
+Vector3D* grav = new Vector3D(0, -1, 0);
+World* world = new World(.75, grav);
 
 int main(int argc, char**argv){
     //initialize
@@ -59,7 +60,6 @@ void timer(int) {
     glutPostRedisplay();
     glutTimerFunc(1000 / 60, timer, 0);
     //here is where to update x and y
-    world->update();
     for(int i = 0; i < world->objects.size() ; i++){
         for(int j = i+1; j < world->objects.size(); j++){
             if(auto cir = dynamic_cast<Circle*>(world->objects[i])){
@@ -70,7 +70,7 @@ void timer(int) {
             }
         }
     }
-
+    world->update();
 }
 
 void mouse(int button, int state, int x, int y) {
@@ -78,9 +78,13 @@ void mouse(int button, int state, int x, int y) {
         createCircle((float)x - 960,(float)-y + 540, 0,5, 50, world);
     }
     else if(button == 2 && state == 0){
-        createLine(500, 500, 0, 500, -500, 0, 5, world);
-        createLine(500, -500, 0, -500, -500, 0, 5, world);
-        createLine(-500, -500, 0, -500, 500, 0, 5, world);
-        createLine(-500, 500, 0, 500, 500, 0, 5, world);
+        createLine(900, 500, 0, 900, -500, 0, 5, world);
+        createLine(900, -500, 0, -900, -500, 0, 5, world);
+        createLine(-900, -500, 0, -900, 500, 0, 5, world);
+        createLine(-900, 500, 0, 900, 500, 0, 5, world);
     }
+    else if(button == 1 && state == 0){
+        createLine(0, 0, 0, x-960, -y+540, 0, 5, world);
+    }
+    std::cout << button << ", " << state << "\n";
 }
