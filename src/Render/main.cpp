@@ -60,13 +60,14 @@ void timer(int) {
     glutPostRedisplay();
     glutTimerFunc(1000 / 60, timer, 0);
     //here is where to update x and y
-    for(int i = 0; i < world->objects.size() ; i++){
-        for(int j = i+1; j < world->objects.size(); j++){
-            if(auto cir = dynamic_cast<Circle*>(world->objects[i])){
-                cir->collide(world->objects[j]);
-            }
-            else if(auto line = dynamic_cast<LineSegment*>(world->objects[i])){
-                line->collide(world->objects[j]);
+    for (int frame = 0; frame < 3; frame++) {
+        for (int i = 0; i < world->objects.size(); i++) {
+            for (int j = i + 1; j < world->objects.size(); j++) {
+                if (auto cir = dynamic_cast<Circle *>(world->objects[i])) {
+                    cir->collide(world->objects[j]);
+                } else if (auto line = dynamic_cast<LineSegment *>(world->objects[i])) {
+                    line->collide(world->objects[j]);
+                }
             }
         }
     }
@@ -86,5 +87,4 @@ void mouse(int button, int state, int x, int y) {
     else if(button == 1 && state == 0){
         createLine(0, 0, 0, x-960, -y+540, 0, 5, world);
     }
-    std::cout << button << ", " << state << "\n";
 }

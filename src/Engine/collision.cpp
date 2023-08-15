@@ -13,48 +13,42 @@ void circleCircleCollision(Circle* cir1, Circle* cir2) {
     double distance = sqrt(pow((cir1->position->x - cir2->position->x), 2) +
                            pow((cir1->position->y - cir2->position->y), 2) +
                            pow((cir1->position->z - cir2->position->z), 2));
-    if (distance >= cir1->radius + cir2->radius) return;
-    Vector3D* direction = new Vector3D(cir1->position->x - cir2->position->x,
+    float overlap = cir1->radius + cir2->radius - distance;
+    if (overlap < 0) return;
+    Vector3D* force = new Vector3D(cir1->position->x - cir2->position->x,
                                        cir1->position->y - cir2->position->y,
                                        cir1->position->z - cir2->position->z);
-    direction->scale(1/(direction->magnitude));
-    cir1->force->add(direction);
-    cir2->force->subtract(direction);
-    delete direction;
+    force->scale(1/(force->magnitude));
+    float forceScalar = 0.5*((1/pow((1-(overlap/cir1->radius)),1)) + (1/pow((1-(overlap/cir2->radius)),1)));
+    force->scale(forceScalar);
+    cir1->force->add(force);
+    cir2->force->subtract(force);
+    delete force;
 }
 
-/*
+
+
 void circleLineCollision(Circle* cir, LineSegment* line) {
+    // substituting line equation into circle equation then check for solution
+    // line defined by <u, v, w>t + <a, b, c>
     float u = line->end->x - line->start->x;
     float v = line->end->y - line->start->y;
     float w = line->end->z - line->start->z;
-    float a = cir->position->x;
-    float b = cir->position->y;
-    float c = cir->position->z;
-    float X = line->start->x - a;
-    float Y = line->start->y - b;
-    float Z = line->start->z - c;
-    float square = u*u + v*v + w*w;
-    float linear = X*u + Y*v + Z*w;
-    float constant = X*X + Y*Y + Z*Z - cir->radius*cir->radius;
-    float discriminant = linear*linear - 4 * square * constant;
-    if (discriminant <= 0) return;
-    float t = ((-linear) + sqrt(discriminant))/(2*square);
-    if (t > 1) return;
-    Vector3D* slopeVec = new Vector3D(u, v, w);
-    Vector3D* cirToStart = new Vector3D(line->start);
-    cirToStart->subtract(cir->position);
-    float projScalar = slopeVec->dot(cirToStart)/(slopeVec->magnitude*slopeVec->magnitude);
-    slopeVec->scale(projScalar);
-    cirToStart->add(slopeVec);
-    Vector3D* direction = cirToStart;
-    direction->scale(1/(direction->magnitude));
-    line->force->add(direction);
-    cir->force->subtract(direction);
-    delete slopeVec;
-    delete cirToStart;
-}*/
-
+    float a = line->start->x - cir->position->x;
+    float b = line->start->y - cir->position->y;
+    float c = line->start->z - cir->position->z;
+    // quadratic of form Ax^2+Bx+C=0
+    float A = u*u + v*v + w*w;
+    float B = 2*(u*a + v*b + w*c);
+    float C = a*a + b*b + c*c - cir->radius*cir->radius;
+    float discriminant = sqrt(B*B-4*A*C);
+    if (discriminant < 0) return;
+    float t1 = (0-B-discriminant)/(2*A);
+    float t2 = (0-B+discriminant)/(2*A);
+    if (!((t1 > 0 && t1 < 1) || (t2 > 0 && t2 < 1))) return;
+    cir->velocity->scale(-1);
+}
+/*
 void circleLineCollision(Circle* cir, LineSegment* line) {
     if((line->end->x - line->start->x) != 0) {
         float m = (line->end->y - line->start->y) / (line->end->x - line->start->x);
@@ -82,6 +76,7 @@ void circleLineCollision(Circle* cir, LineSegment* line) {
 
 
 }
+*/
 
 void lineLineCollision(LineSegment* line1, LineSegment* line2) {
     float u = line1->end->x - line1->start->x;
