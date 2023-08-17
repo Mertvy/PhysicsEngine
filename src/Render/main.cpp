@@ -9,6 +9,7 @@
 #include "../util/Vector3D.h"
 #include "render.h"
 #include "collision.h"
+#include <stdlib.h>
 
 void display();
 void reshape(int, int);
@@ -76,7 +77,7 @@ void timer(int) {
 
 void mouse(int button, int state, int x, int y) {
     if(button == 0 && state == 0) {
-        createCircle((float)x - 960,(float)-y + 540, 0,5, 50, world);
+        createCircle((float)x - 960,(float)-y + 540, 0,rand()%50+50, rand()%50+50, world);
     }
     else if(button == 2 && state == 0){
         createLine(900, 500, 0, 900, -500, 0, 5, world);
