@@ -79,9 +79,9 @@ void World::updateObject(Object *obj, float dt) {
     dVel->scale((dt)/(obj->mass));
     obj->position->add(dPos);
     obj->velocity->add(dVel);
-    obj->force->x = gravity->x;
-    obj->force->y = gravity->y;
-    obj->force->z = gravity->z;
+    obj->force->x = obj->mass * gravity->x;
+    obj->force->y = obj->mass * gravity->y;
+    obj->force->z = obj->mass * gravity->z;
     delete dPos;
     delete dVel;
 
@@ -91,6 +91,7 @@ void World::update() {
     for (Object *obj: objects) {
         updateObject(obj, dt);
     }
+    airresistance();
 }
 
 void World::draw(){
@@ -107,7 +108,7 @@ void World::draw(){
 void World::airresistance(){
     for(Object *obj: objects){
         if(auto cir = dynamic_cast<Circle*>(obj)){
-            float resist = 0.5*cir->velocity->magnitude*((cir->radius*3.1415926)/2) * .0001; //drag coefficient and fluid density small
+            float resist = 0.5*pow(cir->velocity->magnitude, 2)*((cir->radius*3.1415926)/2) * .000001; //drag coefficient and fluid density small
             Vector3D* velcopy = new Vector3D(cir->velocity->x, cir->velocity->y, cir->velocity->z);
             velcopy->scale(-1);
             velcopy->scale(resist);

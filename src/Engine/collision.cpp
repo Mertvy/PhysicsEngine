@@ -15,15 +15,24 @@ void circleCircleCollision(Circle* cir1, Circle* cir2) {
                            pow((cir1->position->z - cir2->position->z), 2));
     float overlap = cir1->radius + cir2->radius - distance;
     if (overlap < 0) return;
-    Vector3D* force = new Vector3D(cir1->position->x - cir2->position->x,
-                                       cir1->position->y - cir2->position->y,
-                                       cir1->position->z - cir2->position->z);
-    force->scale(1/(force->magnitude));
-    float forceScalar = ((1/pow((1-(overlap/cir1->radius)),1)) + (1/pow((1-(overlap/cir2->radius)),1)));
-    force->scale(forceScalar);
-    cir1->force->add(force);
-    cir2->force->subtract(force);
-    delete force;
+
+    Vector3D* direction = new Vector3D(cir2->position);
+    direction->subtract(cir1->position);
+    direction->scale(1/direction->magnitude);
+    Vector3D* velDiff = new Vector3D(cir1->velocity);
+    velDiff->subtract(cir2->velocity);
+    float impulse = 2*((direction->dot(velDiff))/((1/cir1->mass) + (1/cir2->mass)));
+    Vector3D* dVel1 = new Vector3D(direction);
+    Vector3D* dVel2 = new Vector3D(direction);
+    dVel1->scale(-impulse/cir1->mass);
+    dVel2->scale(impulse/cir2->mass);
+    cir1->velocity->add(dVel1);
+    cir2->velocity->add(dVel2);
+
+    delete direction;
+    delete velDiff;
+    delete dVel1;
+    delete dVel2;
 }
 
 

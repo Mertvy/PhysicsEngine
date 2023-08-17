@@ -25,6 +25,7 @@ void Vector3D::scale(float scalar) {
     this->x *= scalar;
     this->y *= scalar;
     this->z *= scalar;
+    this->magnitude *= scalar;
 }
 
 void Vector3D::add(Vector3D* vec) {
