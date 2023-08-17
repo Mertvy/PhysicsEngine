@@ -17,7 +17,7 @@ void timer(int);
 void drawCircle(float, float, float);
 void mouse(int, int , int , int);
 
-Vector3D* grav = new Vector3D(0, -0.5, 0);
+Vector3D* grav = new Vector3D(0, -1.5, 0);
 World* world = new World(.75, grav);
 
 int main(int argc, char**argv){
@@ -75,17 +75,28 @@ void timer(int) {
     world->update();
 }
 
+float drawline[4]; // for mouse
+int counter = 0;
+
 void mouse(int button, int state, int x, int y) {
     if(button == 0 && state == 0) {
-        createCircle((float)x - 960,(float)-y + 540, 0,rand()%50+50, rand()%50+50, world);
+        createCircle((float)x - 960,(float)-y + 540, 0,rand()%1000, rand()%10+40, world);
     }
-    else if(button == 2 && state == 0){
+    else if(button == 1 && state == 0){
         createLine(900, 500, 0, 900, -500, 0, 5, world);
         createLine(900, -500, 0, -900, -500, 0, 5, world);
         createLine(-900, -500, 0, -900, 500, 0, 5, world);
         createLine(-900, 500, 0, 900, 500, 0, 5, world);
     }
-    else if(button == 1 && state == 0){
-        createLine(0, 0, 0, x-960, -y+540, 0, 5, world);
+    else if(button == 2 && state == 0){
+        if(counter == 1){
+            createLine(drawline[0], drawline[1], 0, (float)x - 960, (float)-y + 540, 0, 5, world);
+            counter = 0;
+        }else if(counter ==0){
+            drawline[0] = (float)x - 960;
+            drawline[1] = (float)-y + 540;
+            counter++;
+        }
     }
 }
+

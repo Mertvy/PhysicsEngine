@@ -44,3 +44,9 @@ void drawLine(float sx, float sy, float sz, float ex, float ey, float ez){
     glVertex2f(ex, ey);
     glEnd();
 }
+
+void drawPoint(float x, float y){
+    glBegin(GL_POINT);
+    glVertex2f(x, y);
+    glEnd();
+}
