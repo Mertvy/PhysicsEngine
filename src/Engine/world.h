@@ -55,6 +55,8 @@ public:
 
     void draw();
 
+    void airresistance();
+
     Vector3D* gravity;
     std::vector<Object*> objects;
 };

@@ -6,6 +6,7 @@
 #include "../Render/render.h"
 #include <vector>
 #include "collision.h"
+#include <math.h>
 
 Object::Object(Vector3D* position, Vector3D* velocity, Vector3D* force, float mass) {
         this->position = position;
@@ -99,6 +100,19 @@ void World::draw(){
         }
         else if(auto line = dynamic_cast<LineSegment*>(obj)){
             drawLine(line->start->x, line->start->y, 0, line->end->x, line->end->y, 0);
+        }
+    }
+}
+
+void World::airresistance(){
+    for(Object *obj: objects){
+        if(auto cir = dynamic_cast<Circle*>(obj)){
+            float resist = 0.5*cir->velocity->magnitude*((cir->radius*3.1415926)/2) * .0001; //drag coefficient and fluid density small
+            Vector3D* velcopy = new Vector3D(cir->velocity->x, cir->velocity->y, cir->velocity->z);
+            velcopy->scale(-1);
+            velcopy->scale(resist);
+            cir->force->add(velcopy);
+            delete velcopy;
         }
     }
 }

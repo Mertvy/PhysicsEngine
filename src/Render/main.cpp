@@ -72,6 +72,7 @@ void timer(int) {
         }
     }
     world->update();
+    world->airresistance();
 }
 
 void mouse(int button, int state, int x, int y) {
