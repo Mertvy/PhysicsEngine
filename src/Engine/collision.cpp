@@ -19,7 +19,7 @@ void circleCircleCollision(Circle* cir1, Circle* cir2) {
                                        cir1->position->y - cir2->position->y,
                                        cir1->position->z - cir2->position->z);
     force->scale(1/(force->magnitude));
-    float forceScalar = 0.5*((1/pow((1-(overlap/cir1->radius)),1)) + (1/pow((1-(overlap/cir2->radius)),1)));
+    float forceScalar = ((1/pow((1-(overlap/cir1->radius)),1)) + (1/pow((1-(overlap/cir2->radius)),1)));
     force->scale(forceScalar);
     cir1->force->add(force);
     cir2->force->subtract(force);
@@ -46,7 +46,18 @@ void circleLineCollision(Circle* cir, LineSegment* line) {
     float t1 = (0-B-discriminant)/(2*A);
     float t2 = (0-B+discriminant)/(2*A);
     if (!((t1 > 0 && t1 < 1) || (t2 > 0 && t2 < 1))) return;
-    cir->velocity->scale(-1);
+
+    // reflect velocity over line
+    Vector3D* projection = new Vector3D(u, v, w);
+    float projectionScalar = (projection->dot(cir->velocity))/pow(projection->magnitude, 2);
+    projection->scale(projectionScalar);
+    Vector3D* newVel = new Vector3D(projection);
+    newVel->scale(2);
+    newVel->subtract(cir->velocity);
+    Vector3D* oldVel = cir->velocity;
+    cir->velocity = newVel;
+    delete oldVel;
+    delete projection;
 }
 /*
 void circleLineCollision(Circle* cir, LineSegment* line) {

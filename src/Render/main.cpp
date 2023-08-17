@@ -60,7 +60,7 @@ void timer(int) {
     glutPostRedisplay();
     glutTimerFunc(1000 / 60, timer, 0);
     //here is where to update x and y
-    for (int frame = 0; frame < 3; frame++) {
+    for (int frame = 0; frame < 5; frame++) {
         for (int i = 0; i < world->objects.size(); i++) {
             for (int j = i + 1; j < world->objects.size(); j++) {
                 if (auto cir = dynamic_cast<Circle *>(world->objects[i])) {
