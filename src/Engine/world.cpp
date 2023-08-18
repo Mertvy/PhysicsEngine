@@ -108,7 +108,7 @@ void World::draw(){
 void World::airresistance(){
     for(Object *obj: objects){
         if(auto cir = dynamic_cast<Circle*>(obj)){
-            float resist = 0.5*pow(cir->velocity->magnitude, 2)*((cir->radius*3.1415926)/2) * .000001; //drag coefficient and fluid density small
+            float resist = 0.5*pow(cir->velocity->magnitude, 2)*((cir->radius*3.1415926)/2) * .000005; //drag coefficient and fluid density small
             Vector3D* velcopy = new Vector3D(cir->velocity->x, cir->velocity->y, cir->velocity->z);
             velcopy->scale(-1);
             velcopy->scale(resist);

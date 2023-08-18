@@ -17,7 +17,7 @@ void timer(int);
 void drawCircle(float, float, float);
 void mouse(int, int , int , int);
 
-Vector3D* grav = new Vector3D(0, -1.5, 0);
+Vector3D* grav = new Vector3D(0, -0.5, 0);
 World* world = new World(.75, grav);
 
 int main(int argc, char**argv){
@@ -61,7 +61,7 @@ void timer(int) {
     glutPostRedisplay();
     glutTimerFunc(1000 / 60, timer, 0);
     //here is where to update x and y
-    for (int frame = 0; frame < 3; frame++) {
+    for (int frame = 0; frame < 7; frame++) {
         for (int i = 0; i < world->objects.size(); i++) {
             for (int j = i + 1; j < world->objects.size(); j++) {
                 if (auto cir = dynamic_cast<Circle *>(world->objects[i])) {
@@ -80,7 +80,7 @@ int counter = 0;
 
 void mouse(int button, int state, int x, int y) {
     if(button == 0 && state == 0) {
-        createCircle((float)x - 960,(float)-y + 540, 0,rand()%1000, rand()%10+40, world);
+        createCircle((float)x - 960,(float)-y + 540, 0,rand()%50+50, rand()%50+50, world);
     }
     else if(button == 1 && state == 0){
         createLine(900, 500, 0, 900, -500, 0, 5, world);
@@ -99,4 +99,3 @@ void mouse(int button, int state, int x, int y) {
         }
     }
 }
-
